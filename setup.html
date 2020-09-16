@@ -1,0 +1,56 @@
+<html>
+<head>
+    <title>Run Mania</title>
+ </head>
+<body>
+    <canvas id="gameCanvas" width="400", height="400"></canvas>
+<script>
+    var canvas,canvasContext;
+    
+    window.onload = function(){
+        canvas = document.getElementById('gameCanvas');
+        canvasContext = canvas.getContext('2d');
+        
+        setInterval(mainloop, 1000/50)
+    }
+    
+    var playerXpos = 0;
+    var playerYpos = 0;
+    var PLAYER_SIZE = 10;
+    var playerXspeed = 5;
+    var playerYspeed = 5;
+    
+    var enemyXpos = 0;
+    var enemyYpos = 0;
+    var ENEMY_SIZE = 40;
+    var enemyXspeed = 5;
+    var enemyYspeed = 5;
+    
+    function mainloop(){
+        colorRect(0,0,canvas.width,canvas.height,'black')//bg
+        colorRect(playerXpos,playerYpos,PLAYER_SIZE,PLAYER_SIZE,'green')//player
+        colorRect(enemyXpos,enemyYpos,ENEMY_SIZE,ENEMY_SIZE,'red')//enemy
+        
+        enemyMove();
+    }
+    
+    function enemyMove(){
+        enemyXpos += enemyXspeed
+        
+        if(enemyXpos > canvas.width){
+            enemyXpos = 0 - ENEMY_SIZE;
+        }
+        
+    }
+    function colorRect(x,y,w,h,c){
+        canvasContext.fillStyle = c;
+        canvasContext.fillRect (x,y,w,h,c);
+    }
+    
+
+    
+    
+    
+</script>
+</body> 
+</html>
