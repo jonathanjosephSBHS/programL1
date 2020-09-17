@@ -17,21 +17,45 @@
     var playerXpos = 0;
     var playerYpos = 0;
     var PLAYER_SIZE = 10;
-    var playerXspeed = 5;
-    var playerYspeed = 5;
+    var playerXspeed = 11;
+    var playerYspeed = 11;
     
     var enemyXpos = 0;
     var enemyYpos = 0;
-    var ENEMY_SIZE = 40;
-    var enemyXspeed = 5;
-    var enemyYspeed = 5;
+    var ENEMY_SIZE = 30;
+    var enemyXspeed = 10;
+    var enemyYspeed = 10;
+    
+    var enemy2Xpos = 0;
+    var enemy2Ypos = 0;
+    var ENEMY2_SIZE = 30;
+    var enemy2Xspeed = 10;
+    var enemy2Yspeed = 10;
+    
+    var enemy3Xpos = 0;
+    var enemy3Ypos = 0;
+    var ENEMY3_SIZE = 30;
+    var enemy3Xspeed = 10;
+    var enemy3Yspeed = 10;
+    
+    var enemy4Xpos = 0;
+    var enemy4Ypos = 0;
+    var ENEMY4_SIZE = 30;
+    var enemy4Xspeed = 10;
+    var enemy4Yspeed = 10;
     
     function mainloop(){
         colorRect(0,0,canvas.width,canvas.height,'black')//bg
         colorRect(playerXpos,playerYpos,PLAYER_SIZE,PLAYER_SIZE,'green')//player
         colorRect(enemyXpos,enemyYpos,ENEMY_SIZE,ENEMY_SIZE,'red')//enemy
+        colorRect(enemy2Xpos,enemy2Ypos,ENEMY2_SIZE,ENEMY2_SIZE,'red')// enemy 2
+        colorRect(enemy3Xpos,enemy3Ypos,ENEMY3_SIZE,ENEMY3_SIZE,'red')// enemy 3
+        colorRect(enemy4Xpos,enemy4Ypos,ENEMY4_SIZE,ENEMY4_SIZE,'red')// enemy 4
         
         enemyMove();
+        enemy2Move();
+        enemy3Move();
+        enemy4Move();
     }
     
     function enemyMove(){
@@ -39,9 +63,41 @@
         
         if(enemyXpos > canvas.width){
             enemyXpos = 0 - ENEMY_SIZE;
+            enemyYpos = Math.floor(Math.random()*(canvas.height - ENEMY_SIZE));
         }
         
     }
+    
+    function enemy2Move(){
+        enemy2Ypos += enemy2Yspeed
+        
+        if(enemy2Ypos > canvas.height){
+            enemy2Ypos = 0 - ENEMY2_SIZE;
+            enemy2Xpos = Math.floor(Math.random()*(canvas.width - ENEMY2_SIZE));
+        }
+        
+    }
+    
+    function enemy3Move(){
+        enemy3Xpos += enemy3Xspeed
+        
+        if(enemy3Xpos > canvas.width){
+            enemy3Xpos = 0 - ENEMY3_SIZE;
+            enemy3Ypos = Math.floor(Math.random()*(canvas.height - ENEMY3_SIZE));
+        }
+        
+    }
+    
+        function enemy4Move(){
+        enemy4Ypos += enemy4Yspeed
+        
+        if(enemy4Ypos > canvas.height){
+            enemy4Ypos = 0 - ENEMY4_SIZE;
+            enemy4Xpos = Math.floor(Math.random()*(canvas.width - ENEMY4_SIZE));
+        }
+        
+    }
+    
     function colorRect(x,y,w,h,c){
         canvasContext.fillStyle = c;
         canvasContext.fillRect (x,y,w,h,c);
