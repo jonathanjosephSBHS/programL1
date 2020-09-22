@@ -11,7 +11,7 @@
     window.onload = function(){
         canvas = document.getElementById('gameCanvas');
         canvasContext = canvas.getContext('2d');
-        
+                
         document.addEventListener('keydown', keyPressed);
         document.addEventListener('keyup', keyReleased);
         
@@ -22,7 +22,7 @@
     road.src = 'images/road.jpg';
         
     var car = new Image();
-    car.src = 'images/car.png'
+    car.src = 'images/car.png';
     
     const PLAYER_SIZE = 15;
     var playerXpos = 200;
@@ -30,9 +30,9 @@
     var playerXspeed = 8;
     var playerYspeed = 8;
     
-    var enemyXpos = 0;
+    var enemyXpos = 40;
     var enemyYpos = 40;
-    const ENEMY_SIZE = 30;
+    const ENEMY_SIZE = 40;
     var enemyXspeed = 8;
     var enemyYspeed = 8;
     
@@ -50,7 +50,7 @@
         colorRect(0,0,canvas.width,canvas.height,'black')//bg
         drawImg(road,0,10,1000,200)
         colorRect(playerXpos,playerYpos,PLAYER_SIZE,PLAYER_SIZE,'green')//player
-        drawImg(car,enemyXpos,enemyYpos,ENEMY_SIZE,ENEMY_SIZE,)//enemy
+        drawImg(car,enemyXpos,enemyYpos,100,50,)//enemy
         
         enemyMove();
         playerMove();
