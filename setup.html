@@ -55,7 +55,7 @@
         colorRect(playerXpos,playerYpos,PLAYER_SIZE,PLAYER_SIZE,'green')//player
         drawImg(car,enemyXpos,enemyYpos,100,50,)//enemy
         //colorRect("30px", "Consolas", "black", 280, 40, "text")//score
-        drawText('30px Arial','score: '+score,280,40,'red');
+        drawText('30px Arial','Score: '+score,650,40,'White');
         
         enemyMove();
         playerMove();
@@ -121,6 +121,12 @@
         if(downKeyPress && playerYpos <  canvas.height - PLAYER_SIZE){
             playerYpos += playerYspeed
         }
+        if (playerYpos < 10){
+            score ++
+            playerXpos = 400;
+            playerYpos = canvas.height - PLAYER_SIZE;
+            enemyXspeed += 0.5
+            }
     }
     
     
