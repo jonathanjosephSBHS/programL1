@@ -23,6 +23,9 @@
         
     var car = new Image();
     car.src = 'images/car.png';
+        
+    var player = new Image();
+    player.src = 'images/player.png'
     
     const PLAYER_SIZE = 15;
     var playerXpos = 200;
@@ -51,11 +54,10 @@
     function mainloop(){
         colorRect(300,100,100,100,'yellow')//score
         colorRect(0,0,canvas.width,canvas.height,'black')//bg
-        drawImg(road,0,10,1000,200)
-        colorRect(playerXpos,playerYpos,PLAYER_SIZE,PLAYER_SIZE,'green')//player
+        drawImg(road,0,10,1000,200)//road
+        drawImg(player,playerXpos,playerYpos,30,50)//player
         drawImg(car,enemyXpos,enemyYpos,100,50,)//enemy
-        //colorRect("30px", "Consolas", "black", 280, 40, "text")//score
-        drawText('30px Arial','Score: '+score,650,40,'White');
+        drawText('30px Arial','Score: '+score,650,40,'White');//score
         
         enemyMove();
         playerMove();
@@ -104,6 +106,10 @@
         if(enemyYpos + ENEMY_SIZE > playerYpos && enemyYpos < playerYpos + PLAYER_SIZE && enemyXpos + ENEMY_SIZE > playerXpos && enemyXpos < playerXpos + PLAYER_SIZE){
             playerXpos = 400;
             playerYpos = canvas.height - PLAYER_SIZE;
+            score = 0;
+            enemyXspeed = 8;
+            playerXspeed = 5;
+            playerYspeed = 5;
         }
         
     }
@@ -122,10 +128,12 @@
             playerYpos += playerYspeed
         }
         if (playerYpos < 10){
-            score ++
+            score ++;
             playerXpos = 400;
             playerYpos = canvas.height - PLAYER_SIZE;
-            enemyXspeed += 0.5
+            enemyXspeed += 0.5;
+            playerXspeed += 0.25;
+            playerYspeed += 0.25;
             }
     }
     
