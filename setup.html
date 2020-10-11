@@ -27,8 +27,8 @@
     const PLAYER_SIZE = 15;
     var playerXpos = 200;
     var playerYpos = 400 - PLAYER_SIZE;
-    var playerXspeed = 8;
-    var playerYspeed = 8;
+    var playerXspeed = 5;
+    var playerYspeed = 5;
     
     var enemyXpos = 40;
     var enemyYpos = 40;
@@ -46,11 +46,16 @@
     const UP_KEY = 87
     const DOWN_KEY = 83
     
+    var score = 0;
+    
     function mainloop(){
+        colorRect(300,100,100,100,'yellow')//score
         colorRect(0,0,canvas.width,canvas.height,'black')//bg
         drawImg(road,0,10,1000,200)
         colorRect(playerXpos,playerYpos,PLAYER_SIZE,PLAYER_SIZE,'green')//player
         drawImg(car,enemyXpos,enemyYpos,100,50,)//enemy
+        //colorRect("30px", "Consolas", "black", 280, 40, "text")//score
+        drawText('30px Arial','score: '+score,280,40,'red');
         
         enemyMove();
         playerMove();
@@ -97,7 +102,7 @@
         }
         
         if(enemyYpos + ENEMY_SIZE > playerYpos && enemyYpos < playerYpos + PLAYER_SIZE && enemyXpos + ENEMY_SIZE > playerXpos && enemyXpos < playerXpos + PLAYER_SIZE){
-            playerXpos = 0;
+            playerXpos = 400;
             playerYpos = canvas.height - PLAYER_SIZE;
         }
         
@@ -127,10 +132,14 @@
     function drawImg(src,x,y,w,h){
         canvasContext.drawImage(src,x,y,w,h);
     }
+        
+    function drawText(f,msg,x,y,c){
+        canvasContext.font = f;
+        canvasContext.fillStyle = c;
+        canvasContext.fillText(msg, x, y);
+    }
     
 
-    
-    
     
 </script>
 </body> 
