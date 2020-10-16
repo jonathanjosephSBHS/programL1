@@ -15,6 +15,10 @@
         document.addEventListener('keydown', keyPressed);
         document.addEventListener('keyup', keyReleased);
         
+        for(var i = 0; i < totalCars; i++){
+            makeCars();
+        }
+        
         setInterval(mainloop, 1000/60)
     }
     
@@ -23,6 +27,9 @@
         
     var car = new Image();
     car.src = 'images/car.png';
+        
+    var car2 = new Image();
+    car2.src = 'images/car2.png';
         
     var player = new Image();
     player.src = 'images/player.png'
@@ -51,16 +58,24 @@
     
     var score = 0;
     
+    var cars = [];
+    var totalCars = 8; 
+    var carCounter = 0;
+        
     function mainloop(){
         colorRect(300,100,100,100,'yellow')//score
         colorRect(0,0,canvas.width,canvas.height,'black')//bg
-        drawImg(road,0,10,1000,200)//road
+        drawImg(road,0,0,1000,200)//road
         drawImg(player,playerXpos,playerYpos,30,50)//player
         drawImg(car,enemyXpos,enemyYpos,100,50,)//enemy
         drawText('30px Arial','Score: '+score,650,40,'White');//score
         
+        
         enemyMove();
         playerMove();
+        
+        drawCars();
+        moveCars();
 
     }
     
@@ -96,6 +111,49 @@
         
     }
     
+    function makeCars(){
+        var randLane = Math.floor(Math.random()*4);
+        const CAR_WIDTH = 100;
+        const CAR_HEIGHT = 50;
+        
+        if(carCounter%2 == 0){
+            var carXpos = canvas.width;
+            var carYpos = (CAR_HEIGHT * 3) + CAR_HEIGHT * randLane;
+            var carXspeed = Math.floor(Math.random()*-10);
+            var carImg = new Image();
+            carImg.src = 'images/car2.png';
+        } else {
+            var carXpos = 0;
+            var carYpos = (CAR_HEIGHT * 1.5) + CAR_HEIGHT * randLane;
+            var carXspeed = Math.floor(Math.random()*(10 - 4)) + 4;
+            var carImg = new Image();
+            carImg.src = 'images/car.png';
+        }
+        carCounter++;
+        
+        var car = {
+            carXpos: carXpos,
+            carYpos: carYpos,
+            CAR_WIDTH: CAR_WIDTH,
+            CAR_HEIGHT: CAR_HEIGHT,
+            carXspeed: carXspeed,
+            carImg: carImg
+        }
+        cars.push(car);
+    }    
+        
+    function drawCars(){
+        cars.forEach(function(car,i,array){
+             drawImg(car.carImg,car.carXpos,car.carYpos,car.CAR_WIDTH,car.CAR_HEIGHT);
+        });
+    }    
+       
+    function moveCars(){
+        cars.forEach(function(car,i,array){
+           car.carXpos += car.carXspeed;
+        });
+    }      
+        
     function enemyMove(){
         enemyXpos += enemyXspeed
         
@@ -127,13 +185,13 @@
         if(downKeyPress && playerYpos <  canvas.height - PLAYER_SIZE){
             playerYpos += playerYspeed
         }
-        if (playerYpos < 10){
+        if (playerYpos < 5){
             score ++;
             playerXpos = 400;
             playerYpos = canvas.height - PLAYER_SIZE;
-            enemyXspeed += 0.5;
-            playerXspeed += 0.25;
-            playerYspeed += 0.25;
+            enemyXspeed += 0.25;
+            playerXspeed += 0.1;
+            playerYspeed += 0.1;
             }
     }
     
