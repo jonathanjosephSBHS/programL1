@@ -22,8 +22,8 @@
         setInterval(mainloop, 1000/60)
     }
     
-    var road = new Image();
-    road.src = 'images/road.jpg';
+    var lanes = new Image();
+    lanes.src = 'images/lanes.png';
         
     var car = new Image();
     car.src = 'images/car.png';
@@ -65,7 +65,7 @@
     function mainloop(){
         colorRect(300,100,100,100,'yellow')//score
         colorRect(0,0,canvas.width,canvas.height,'black')//bg
-        drawImg(road,0,0,1000,200)//road
+        drawImg(lanes,0,0,1000,800)//lanes
         drawImg(player,playerXpos,playerYpos,30,50)//player
         drawImg(car,enemyXpos,enemyYpos,100,50,)//enemy
         drawText('30px Arial','Score: '+score,650,40,'White');//score
@@ -151,6 +151,18 @@
     function moveCars(){
         cars.forEach(function(car,i,array){
            car.carXpos += car.carXspeed;
+            if(car.carXpos > canvas.width){
+            car.carXpos = 0 - car.CAR;
+        }
+            if(car.carYpos + car.CAR_HEIGHT > playerYpos && car.carYpos < playerYpos + PLAYER_SIZE && car.carXpos + car.CAR_WIDTH > playerXpos && car.carXpos < playerXpos + PLAYER_SIZE){
+            playerXpos = 400;
+            playerYpos = canvas.height - PLAYER_SIZE;
+            score = 0;
+            car.carXspeed = 8;
+            playerXspeed = 5;
+            playerYspeed = 5;
+        }
+              
         });
     }      
         
