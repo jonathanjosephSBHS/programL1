@@ -29,7 +29,7 @@
     car.src = 'images/carback.png';
         
     var car2 = new Image();
-    car2.src = 'images/car2.png';
+    car2.src = 'images/car.png';
         
     var player = new Image();
     player.src = 'images/player.png'
@@ -67,7 +67,7 @@
         colorRect(0,0,canvas.width,canvas.height,'black')//bg
         drawImg(lanes,0,0,1000,800)//lanes
         drawImg(player,playerXpos,playerYpos,30,50)//player
-        drawImg(car,enemyXpos,enemyYpos,100,50,)//enemy
+//        drawImg(carback,enemyXpos,enemyYpos,100,50,)//enemy
         drawText('30px Arial','Score: '+score,650,40,'White');//score
         
         
@@ -110,24 +110,32 @@
         }
         
     }
-    
+     
+        
     function makeCars(){
-        var randLane = Math.floor(Math.random()*4);
         const CAR_WIDTH = 100;
         const CAR_HEIGHT = 50;
         
-        if(carCounter%2 == 0){
+        
+        if(carCounter%2 == 0 && carCounter != 0){
             var carXpos = canvas.width;
-            var carYpos = (CAR_HEIGHT * 3) + CAR_HEIGHT * randLane;
-            var carXspeed = -1;
+            var carYpos = CAR_HEIGHT * carCounter + CAR_HEIGHT * carCounter + 10;
+            var carXspeed = -2;
             var carImg = new Image();
             carImg.src = 'images/car.png';
         } else {
-            var carXpos = 0;
-            var carYpos = (CAR_HEIGHT * 1.5) + CAR_HEIGHT * randLane;
-            var carXspeed = 1;
+            var carXpos = 0
+            var carYpos = CAR_HEIGHT * carCounter + CAR_HEIGHT * carCounter + 10;
+            var carXspeed = 2;
             var carImg = new Image();
             carImg.src = 'images/carback.png';
+        }
+        if(carCounter == 0){
+            var carXpos = canvas.width;
+            var carYpos = CAR_HEIGHT * carCounter + CAR_HEIGHT * 0.8;
+            var carXspeed = -2;
+            var carImg = new Image();
+            carImg.src = 'images/car.png';
         }
         carCounter++;
         
@@ -151,9 +159,11 @@
     function moveCars(){
         cars.forEach(function(car,i,array){
            car.carXpos += car.carXspeed;
+            
             if(car.carXpos > canvas.width){
-            car.carXpos = 0 - car.CAR;
+            car.carXpos = 0 - car.CAR_WIDTH;
         }
+                
             if(car.carYpos + car.CAR_HEIGHT > playerYpos && car.carYpos < playerYpos + PLAYER_SIZE && car.carXpos + car.CAR_WIDTH > playerXpos && car.carXpos < playerXpos + PLAYER_SIZE){
             playerXpos = 400;
             playerYpos = canvas.height - PLAYER_SIZE;
