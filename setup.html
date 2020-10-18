@@ -26,7 +26,7 @@
     lanes.src = 'images/lanes.png';
         
     var car = new Image();
-    car.src = 'images/car.png';
+    car.src = 'images/carback.png';
         
     var car2 = new Image();
     car2.src = 'images/car2.png';
@@ -119,15 +119,15 @@
         if(carCounter%2 == 0){
             var carXpos = canvas.width;
             var carYpos = (CAR_HEIGHT * 3) + CAR_HEIGHT * randLane;
-            var carXspeed = Math.floor(Math.random()*-10);
+            var carXspeed = -1;
             var carImg = new Image();
-            carImg.src = 'images/car2.png';
+            carImg.src = 'images/car.png';
         } else {
             var carXpos = 0;
             var carYpos = (CAR_HEIGHT * 1.5) + CAR_HEIGHT * randLane;
-            var carXspeed = Math.floor(Math.random()*(10 - 4)) + 4;
+            var carXspeed = 1;
             var carImg = new Image();
-            carImg.src = 'images/car.png';
+            carImg.src = 'images/carback.png';
         }
         carCounter++;
         
@@ -158,7 +158,7 @@
             playerXpos = 400;
             playerYpos = canvas.height - PLAYER_SIZE;
             score = 0;
-            car.carXspeed = 8;
+            car.carXspeed = -8;
             playerXspeed = 5;
             playerYspeed = 5;
         }
