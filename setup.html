@@ -117,9 +117,10 @@
         const CAR_HEIGHT = 50;
         
         
+        
         if(carCounter%2 == 0 && carCounter != 0){
             var carXpos = canvas.width;
-            var carYpos = CAR_HEIGHT * carCounter + CAR_HEIGHT * carCounter + 10;
+            var carYpos = CAR_HEIGHT * carCounter + CAR_HEIGHT * carCounter;
             var carXspeed = -2;
             var carImg = new Image();
             carImg.src = 'images/car.png';
@@ -137,6 +138,42 @@
             var carImg = new Image();
             carImg.src = 'images/car.png';
         }
+        if(carCounter == 6){
+            var carXpos = canvas.width;
+            var carYpos = CAR_HEIGHT * carCounter + CAR_HEIGHT * 5.5;
+            var carXspeed = -2;
+            var carImg = new Image();
+            carImg.src = 'images/car.png';
+        }
+        if(carCounter == 2){
+            var carXpos = canvas.width;
+            var carYpos = CAR_HEIGHT * carCounter + CAR_HEIGHT * 2.5;
+            var carXspeed = -2;
+            var carImg = new Image();
+            carImg.src = 'images/car.png';
+        }
+        if(carCounter == 5){
+            var carXpos = 0;
+            var carYpos = CAR_HEIGHT * carCounter + CAR_HEIGHT * 4.5;
+            var carXspeed = 2;
+            var carImg = new Image();
+            carImg.src = 'images/carback.png';
+        }
+        if(carCounter == 7){
+            var carXpos = 0;
+            var carYpos = CAR_HEIGHT * carCounter + CAR_HEIGHT * 6.25;
+            var carXspeed = 2;
+            var carImg = new Image();
+            carImg.src = 'images/carback.png';
+        }
+        if(carCounter == 3){
+            var carXpos = 0;
+            var carYpos = CAR_HEIGHT * carCounter + CAR_HEIGHT * 3;
+            var carXspeed = 2;
+            var carImg = new Image();
+            carImg.src = 'images/carback.png';
+        }
+            
         carCounter++;
         
         var car = {
@@ -187,7 +224,7 @@
             playerXpos = 400;
             playerYpos = canvas.height - PLAYER_SIZE;
             score = 0;
-            enemyXspeed = 8;
+            enemyXspeed = 2;
             playerXspeed = 5;
             playerYspeed = 5;
         }
