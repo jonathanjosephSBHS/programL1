@@ -34,9 +34,10 @@
     var player = new Image();
     player.src = 'images/player.png'
     
-    const PLAYER_SIZE = 15;
-    var playerXpos = 200;
-    var playerYpos = 400 - PLAYER_SIZE;
+    const PLAYER_WIDTH = 25;
+    const PLAYER_HEIGHT = 45;
+    var playerXpos = 350;
+    var playerYpos = 800 - PLAYER_HEIGHT;
     var playerXspeed = 5;
     var playerYspeed = 5;
     
@@ -66,12 +67,10 @@
         colorRect(300,100,100,100,'yellow')//score
         colorRect(0,0,canvas.width,canvas.height,'black')//bg
         drawImg(lanes,0,0,1000,800)//lanes
-        drawImg(player,playerXpos,playerYpos,30,50)//player
-//        drawImg(carback,enemyXpos,enemyYpos,100,50,)//enemy
+        drawImg(player,playerXpos,playerYpos,PLAYER_WIDTH,PLAYER_HEIGHT)//player
         drawText('30px Arial','Score: '+score,650,40,'White');//score
         
         
-        enemyMove();
         playerMove();
         
         drawCars();
@@ -125,7 +124,7 @@
             var carImg = new Image();
             carImg.src = 'images/car.png';
         } else {
-            var carXpos = 0
+            var carXpos = -100;
             var carYpos = CAR_HEIGHT * carCounter + CAR_HEIGHT * carCounter + 10;
             var carXspeed = 2;
             var carImg = new Image();
@@ -153,21 +152,21 @@
             carImg.src = 'images/car.png';
         }
         if(carCounter == 5){
-            var carXpos = 0;
+            var carXpos = -100;
             var carYpos = CAR_HEIGHT * carCounter + CAR_HEIGHT * 4.5;
             var carXspeed = 2;
             var carImg = new Image();
             carImg.src = 'images/carback.png';
         }
         if(carCounter == 7){
-            var carXpos = 0;
+            var carXpos = -100;
             var carYpos = CAR_HEIGHT * carCounter + CAR_HEIGHT * 6.25;
             var carXspeed = 2;
             var carImg = new Image();
             carImg.src = 'images/carback.png';
         }
         if(carCounter == 3){
-            var carXpos = 0;
+            var carXpos = -100;
             var carYpos = CAR_HEIGHT * carCounter + CAR_HEIGHT * 3;
             var carXspeed = 2;
             var carImg = new Image();
@@ -201,11 +200,11 @@
             car.carXpos = 0 - car.CAR_WIDTH;
         }
                 
-            if(car.carYpos + car.CAR_HEIGHT > playerYpos && car.carYpos < playerYpos + PLAYER_SIZE && car.carXpos + car.CAR_WIDTH > playerXpos && car.carXpos < playerXpos + PLAYER_SIZE){
-            playerXpos = 400;
-            playerYpos = canvas.height - PLAYER_SIZE;
+            if(playerXpos + PLAYER_WIDTH > car.carXpos && playerXpos < car.carXpos + car.CAR_WIDTH && playerYpos + PLAYER_HEIGHT > car.carYpos && playerYpos < car.carYpos + car.CAR_HEIGHT){
+            playerXpos = canvas.width / 2 - PLAYER_WIDTH / 2;
+            playerYpos = canvas.height - PLAYER_HEIGHT;
             score = 0;
-            car.carXspeed = -8;
+            car.carXspeed = -2;
             playerXspeed = 5;
             playerYspeed = 5;
         }
@@ -213,41 +212,23 @@
         });
     }      
         
-    function enemyMove(){
-        enemyXpos += enemyXspeed
-        
-        if(enemyXpos > canvas.width){
-            enemyXpos = 0 - ENEMY_SIZE;
-        }
-        
-        if(enemyYpos + ENEMY_SIZE > playerYpos && enemyYpos < playerYpos + PLAYER_SIZE && enemyXpos + ENEMY_SIZE > playerXpos && enemyXpos < playerXpos + PLAYER_SIZE){
-            playerXpos = 400;
-            playerYpos = canvas.height - PLAYER_SIZE;
-            score = 0;
-            enemyXspeed = 2;
-            playerXspeed = 5;
-            playerYspeed = 5;
-        }
-        
-    }
-    
     function playerMove(){
         if(leftKeyPress && playerXpos > 0){
             playerXpos -= playerXspeed
         }
-        if(rightKeyPress && playerXpos < canvas.width - PLAYER_SIZE){
+        if(rightKeyPress && playerXpos < canvas.width - PLAYER_WIDTH){
             playerXpos += playerXspeed
         }
         if(upKeyPress && playerYpos > 0){
             playerYpos -= playerYspeed
         }
-        if(downKeyPress && playerYpos <  canvas.height - PLAYER_SIZE){
+        if(downKeyPress && playerYpos <  canvas.height - PLAYER_HEIGHT){
             playerYpos += playerYspeed
         }
         if (playerYpos < 5){
             score ++;
             playerXpos = 400;
-            playerYpos = canvas.height - PLAYER_SIZE;
+            playerYpos = canvas.height - PLAYER_HEIGHT;
             enemyXspeed += 0.25;
             playerXspeed += 0.1;
             playerYspeed += 0.1;
