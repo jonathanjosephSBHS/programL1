@@ -78,7 +78,7 @@
 
     }
     
-    function keyPressed(evt){
+    function keyPressed(evt){                                                            // Player Movement keybinding (key down)
         if(evt.keyCode == LEFT_KEY){
             leftKeyPress = true;
         }
@@ -89,12 +89,12 @@
             upKeyPress = true;
         }
         if(evt.keyCode == DOWN_KEY){
-            downKeyPress = true;                                                         // Player Movement keybinding
+            downKeyPress = true;                                                         
         }
         
     }
     
-    function keyReleased(evt){
+    function keyReleased(evt){                                                           // Player Movement keybinding (key up)
          if(evt.keyCode == LEFT_KEY){
             leftKeyPress = false;
         }
@@ -105,7 +105,7 @@
             upKeyPress = false;
         }
         if(evt.keyCode == DOWN_KEY){
-            downKeyPress = false;                                                          // Player Movement keybinding
+            downKeyPress = false;                                                          
         }
         
     }
@@ -117,7 +117,7 @@
         var carD = '';
         
         
-        if(carCounter%2 == 0 && carCounter != 0){
+        if(carCounter%2 == 0 && carCounter != 0){                                           // Initial Car array make
             var carXpos = canvas.width;
             var carYpos = CAR_HEIGHT * carCounter + CAR_HEIGHT * carCounter;
             var carXspeed = -2;
@@ -130,7 +130,7 @@
             var carXspeed = 2;
             var carImg = new Image();
             carD = 'right';
-            carImg.src = 'images/carback.png';                                              // Initial Car array make
+            carImg.src = 'images/carback.png';                                              
         }
         if(carCounter == 0){
             var carXpos = canvas.width;
@@ -205,10 +205,12 @@
         cars.forEach(function(car,i,array){
            car.carXpos += car.carXspeed;
             
-            if(car.carXpos > canvas.width && car.carD = 'right'){
-            car.carXpos = 0 - car.CAR_WIDTH;
-        }
-                
+            if(car.carXpos > canvas.width){
+            car.carXpos = -100 ;                                                    // Left car going right then coming back from left
+            }
+            if(car.carXpos < -100 ){
+            car.carXpos = canvas.width - car.CAR_WIDTH + 100;                       // Right car goind left then coming back from right
+            }  
             if(playerXpos + PLAYER_WIDTH > car.carXpos && playerXpos < car.carXpos + car.CAR_WIDTH && playerYpos + PLAYER_HEIGHT > car.carYpos && playerYpos < car.carYpos + car.CAR_HEIGHT && car.carD == 'right'){
             playerXpos = canvas.width / 2 - PLAYER_WIDTH / 2;
             playerYpos = canvas.height - PLAYER_HEIGHT;
@@ -224,13 +226,13 @@
             score = 0;
             car.carXspeed = -2;
             playerXspeed = 5;
-            playerYspeed = 5;
+            playerYspeed = 5;                                                       // Collision and Speed Reset of opposite Cars
         }
               
         });
     }      
         
-    function playerMove(){                                                         // Collision and Speed Reset of opposite Cars
+    function playerMove(){                                                         
         if(leftKeyPress && playerXpos > 0){
             playerXpos -= playerXspeed
         }
