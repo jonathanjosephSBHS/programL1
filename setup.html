@@ -72,7 +72,6 @@
         
         
         playerMove();
-        
         drawCars();
         moveCars();
 
@@ -204,7 +203,11 @@
     function moveCars(){
         cars.forEach(function(car,i,array){
            car.carXpos += car.carXspeed;
-            
+            if(car.carD == 'left'){
+                car.carXspeed = -2 - score / 4;
+            } else if(car.carD == 'right'){
+                car.carXspeed = 2 + score / 4;
+            }
             if(car.carXpos > canvas.width){
             car.carXpos = -100 ;                                                    // Left car going right then coming back from left
             }
@@ -218,8 +221,7 @@
             car.carXspeed = 2;
             playerXspeed = 5;
             playerYspeed = 5;                                                       // Collision and Speed Reset
-        }
-            
+            }
             if(playerXpos + PLAYER_WIDTH > car.carXpos && playerXpos < car.carXpos + car.CAR_WIDTH && playerYpos + PLAYER_HEIGHT > car.carYpos && playerYpos < car.carYpos + car.CAR_HEIGHT && car.carD == 'left'){
             playerXpos = canvas.width / 2 - PLAYER_WIDTH / 2;
             playerYpos = canvas.height - PLAYER_HEIGHT;
@@ -227,12 +229,12 @@
             car.carXspeed = -2;
             playerXspeed = 5;
             playerYspeed = 5;                                                       // Collision and Speed Reset of opposite Cars
-        }
+            }
               
         });
     }      
         
-    function playerMove(){                                                         
+    function playerMove(){                                                         // Player movement and keybind connection starts
         if(leftKeyPress && playerXpos > 0){
             playerXpos -= playerXspeed
         }
@@ -252,9 +254,8 @@
             enemyXspeed += 0.25;
             playerXspeed += 0.1;
             playerYspeed += 0.1;
-            }                                                                      
+            }                                                                       // Player movement and keybind connection ends      
     }
-    
     
     function colorRect(x,y,w,h,c){
         canvasContext.fillStyle = c;
