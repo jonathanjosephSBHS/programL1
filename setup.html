@@ -22,8 +22,8 @@
         setInterval(mainloop, 1000/60)
     }
     
-    var lanes = new Image();
-    lanes.src = 'images/lanes.png';             // The Road background
+    var lanes4 = new Image();
+    lanes4.src = 'images/lanes4.png';             // The Road background
         
     var car = new Image();
     car.src = 'images/carback.png';             // The Car facing right
@@ -63,18 +63,23 @@
     var totalCars = 8; 
     var carCounter = 0;
         
-    function mainloop(){
-        colorRect(300,100,100,100,'yellow')                                             // score
-        colorRect(0,0,canvas.width,canvas.height,'black')                               // bg
-        drawImg(lanes,0,0,1000,800)                                                     // lanes
-        drawImg(player,playerXpos,playerYpos,PLAYER_WIDTH,PLAYER_HEIGHT)                // player
-        drawText('30px Arial','Score: '+score,650,40,'White');                          // score
+    var gameRun = true;
         
+    function mainloop(){
+        if(gameRun){
+        colorRect(300,100,100,100,'yellow');                                             // score
+        colorRect(0,0,canvas.width,canvas.height,'black');                               // bg
+        drawImg(lanes4,0,0,1000,800);                                                    // 4 lanes
+        drawImg(player,playerXpos,playerYpos,PLAYER_WIDTH,PLAYER_HEIGHT);                // player
+        drawText('30px Arial','Score: '+score,650,40,'White');                           // score
         
         playerMove();
         drawCars();
         moveCars();
-
+        } else {
+            colorRect(0,0,canvas.width,canvas.height,'black');
+        drawText('30px Arial','Game over ' +  ' total Score: '+score,canvas.width/3,canvas.height/2,'White');                           // score
+        }
     }
     
     function keyPressed(evt){                                                            // Player Movement keybinding (key down)
@@ -217,18 +222,18 @@
             if(playerXpos + PLAYER_WIDTH > car.carXpos && playerXpos < car.carXpos + car.CAR_WIDTH && playerYpos + PLAYER_HEIGHT > car.carYpos && playerYpos < car.carYpos + car.CAR_HEIGHT && car.carD == 'right'){
             playerXpos = canvas.width / 2 - PLAYER_WIDTH / 2;
             playerYpos = canvas.height - PLAYER_HEIGHT;
-            score = 0;
             car.carXspeed = 2;
             playerXspeed = 5;
             playerYspeed = 5;                                                       // Collision and Speed Reset
+            gameRun = false;
             }
             if(playerXpos + PLAYER_WIDTH > car.carXpos && playerXpos < car.carXpos + car.CAR_WIDTH && playerYpos + PLAYER_HEIGHT > car.carYpos && playerYpos < car.carYpos + car.CAR_HEIGHT && car.carD == 'left'){
             playerXpos = canvas.width / 2 - PLAYER_WIDTH / 2;
             playerYpos = canvas.height - PLAYER_HEIGHT;
-            score = 0;
             car.carXspeed = -2;
             playerXspeed = 5;
             playerYspeed = 5;                                                       // Collision and Speed Reset of opposite Cars
+            gameRun = false;
             }
               
         });
@@ -269,10 +274,14 @@
     function drawText(f,msg,x,y,c){                                                // Function to display Text on the screen
         canvasContext.font = f;
         canvasContext.fillStyle = c;
-        canvasContext.fillText(msg, x, y);
+        canvasContext.fillText(msg,x,y);
     }
     
-
+//    function colorText(msg,x,y,f,c){                                                // Function to display losing screen text
+//        canvasContext.fillStyle = c;
+//        canvasContext.font = f;
+//        canvasContext.filltext(msg,x,y);
+//    }
     
 </script>
 </body> 
