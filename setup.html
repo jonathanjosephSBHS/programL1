@@ -22,6 +22,16 @@
         setInterval(mainloop, 1000/60)
     }
     
+    var difficulty = ''
+    
+    while(difficulty != 'easy' && difficulty != 'hard'){
+        difficulty = prompt('What diffculty do you want? easy or hard','easy');
+    }
+    
+    var name = ''
+    
+    name = prompt('What is your name?','Joe')
+    
     var lanes4 = new Image();
     lanes4.src = 'images/lanes4.png';             // The Road background
         
@@ -41,11 +51,6 @@
     var playerXspeed = 5;
     var playerYspeed = 5;
     
-    var enemyXpos = 40;
-    var enemyYpos = 40;
-    const ENEMY_SIZE = 40;
-    var enemyXspeed = 8;
-    var enemyYspeed = 8;
     
     var leftKeyPress = false;
     var rightKeyPress = false;
@@ -65,6 +70,14 @@
         
     var gameRun = true;
         
+        if(difficulty == 'easy'){
+            playerXspeed = 7;
+            playerYspeed = 7;
+        } else {
+            playerXspeed = 5;
+            playerYspeed = 5;
+        }
+        
     function mainloop(){
         if(gameRun){
         colorRect(300,100,100,100,'yellow');                                             // score
@@ -78,7 +91,7 @@
         moveCars();
         } else {
             colorRect(0,0,canvas.width,canvas.height,'black');
-        drawText('30px Arial','Game over ' +  ' total Score: '+score,canvas.width/3,canvas.height/2,'White');                           // score
+        drawText('30px Arial','Game over ' + name + ' Scored: '+score,canvas.width/3,canvas.height/2,'White');                           // score
         }
     }
     
@@ -221,18 +234,12 @@
             }  
             if(playerXpos + PLAYER_WIDTH > car.carXpos && playerXpos < car.carXpos + car.CAR_WIDTH && playerYpos + PLAYER_HEIGHT > car.carYpos && playerYpos < car.carYpos + car.CAR_HEIGHT && car.carD == 'right'){
             playerXpos = canvas.width / 2 - PLAYER_WIDTH / 2;
-            playerYpos = canvas.height - PLAYER_HEIGHT;
-            car.carXspeed = 2;
-            playerXspeed = 5;
-            playerYspeed = 5;                                                       // Collision and Speed Reset
+            playerYpos = canvas.height - PLAYER_HEIGHT;                              // Collision 
             gameRun = false;
             }
             if(playerXpos + PLAYER_WIDTH > car.carXpos && playerXpos < car.carXpos + car.CAR_WIDTH && playerYpos + PLAYER_HEIGHT > car.carYpos && playerYpos < car.carYpos + car.CAR_HEIGHT && car.carD == 'left'){
             playerXpos = canvas.width / 2 - PLAYER_WIDTH / 2;
-            playerYpos = canvas.height - PLAYER_HEIGHT;
-            car.carXspeed = -2;
-            playerXspeed = 5;
-            playerYspeed = 5;                                                       // Collision and Speed Reset of opposite Cars
+            playerYpos = canvas.height - PLAYER_HEIGHT;                              // Collision of opposite Cars
             gameRun = false;
             }
               
@@ -256,7 +263,6 @@
             score ++;
             playerXpos = 400;
             playerYpos = canvas.height - PLAYER_HEIGHT;
-            enemyXspeed += 0.25;
             playerXspeed += 0.1;
             playerYspeed += 0.1;
             }                                                                       // Player movement and keybind connection ends      
@@ -276,12 +282,6 @@
         canvasContext.fillStyle = c;
         canvasContext.fillText(msg,x,y);
     }
-    
-//    function colorText(msg,x,y,f,c){                                                // Function to display losing screen text
-//        canvasContext.fillStyle = c;
-//        canvasContext.font = f;
-//        canvasContext.filltext(msg,x,y);
-//    }
     
 </script>
 </body> 
