@@ -20,18 +20,20 @@
         }
         
         setInterval(mainloop, 1000/60)
-    }
+    } // end func
     
-    var difficulty = ''
+    var difficulty = ''                     // The difficulty 
     
     while(difficulty != 'easy' && difficulty != 'hard'){
-        difficulty = prompt('What diffculty do you want? easy or hard','easy');
-    }
+        difficulty = prompt('What diffculty do you want? easy or hard?','easy');            // asks the user what difficult they want at the start of the game
+    }                       
     
     var name = ''
-    
-    name = prompt('What is your name?','Joe')
-    
+        name = prompt('What is your name?','Joe')
+    while(name == '' || name == null){
+            name = prompt('What is your name?','Joe')                                       // asks the user what their name is at the start of the game
+        }                    
+                
     var lanes4 = new Image();
     lanes4.src = 'images/lanes4.png';             // The Road background
         
@@ -52,35 +54,34 @@
     var playerYspeed = 5;
     
     
-    var leftKeyPress = false;
+    var leftKeyPress = false;                   // Key press on or off
     var rightKeyPress = false;
     var upKeyPress = false;
     var downKeyPress = false;
         
-    const LEFT_KEY = 65
-    const RIGHT_KEY = 68
-    const UP_KEY = 87
-    const DOWN_KEY = 83
+    const LEFT_KEY = 65;                      // Keybinding  and setting the according parameters recorded from "console.log" when pressing w,a,s,d 
+    const RIGHT_KEY = 68;
+    const UP_KEY = 87;
+    const DOWN_KEY = 83;
     
-    var score = 0;
+    var score = 0;                             // score counter
     
-    var cars = [];                                                                      // Car Array making starts
+    var cars = [];                             // Car Array making starts
     var totalCars = 8; 
     var carCounter = 0;
         
     var gameRun = true;
         
-        if(difficulty == 'easy'){
-            playerXspeed = 7;
-            playerYspeed = 7;
-        } else {
-            playerXspeed = 5;
-            playerYspeed = 5;
-        }
+    if(difficulty == 'easy'){                   // an if else statement  to check if the user inputs "easy" or "hard", and then accordingly, set the player speed to a higher or a lower one 
+        playerXspeed = 5;
+        playerYspeed = 5;
+    } else {
+        playerXspeed = 10;
+        playerYspeed = 10;
+    }
         
     function mainloop(){
-        if(gameRun){
-        colorRect(300,100,100,100,'yellow');                                             // score
+        if(gameRun){            // when game is running
         colorRect(0,0,canvas.width,canvas.height,'black');                               // bg
         drawImg(lanes4,0,0,1000,800);                                                    // 4 lanes
         drawImg(player,playerXpos,playerYpos,PLAYER_WIDTH,PLAYER_HEIGHT);                // player
@@ -89,54 +90,55 @@
         playerMove();
         drawCars();
         moveCars();
-        } else {
+        } else {                // when game stops after collision
             colorRect(0,0,canvas.width,canvas.height,'black');
-        drawText('30px Arial','Game over ' + name + ' Scored: '+score,canvas.width/3,canvas.height/2,'White');                           // score
+        drawText('30px Arial','Game over ' + name + ' Scored: '+score,canvas.width/20,canvas.height/2,'White'); 
         }
-    }
+    }   // end func
+        
     
-    function keyPressed(evt){                                                            // Player Movement keybinding (key down)
+    function keyPressed(evt){                                                            // Event for "A" which connects it to left key press
         if(evt.keyCode == LEFT_KEY){
             leftKeyPress = true;
         }
-        if(evt.keyCode == RIGHT_KEY){
+        if(evt.keyCode == RIGHT_KEY){                                                    // Event for "D" which connects it to right key press
             rightKeyPress = true;
         }
-        if(evt.keyCode == UP_KEY){
+        if(evt.keyCode == UP_KEY){                                                       // Event for "W" which connects it to up key press
             upKeyPress = true;
         }
-        if(evt.keyCode == DOWN_KEY){
-            downKeyPress = true;                                                         
+        if(evt.keyCode == DOWN_KEY){                                                     // Event for "S" which connects it to down key press
+            downKeyPress = true;                                                             
         }
         
     }
     
-    function keyReleased(evt){                                                           // Player Movement keybinding (key up)
+    function keyReleased(evt){                                                           // Event for "A" which connects it to left key realease 
          if(evt.keyCode == LEFT_KEY){
             leftKeyPress = false;
         }
-        if(evt.keyCode == RIGHT_KEY){
+        if(evt.keyCode == RIGHT_KEY){                                                    // Event for "D" which connects it to right key realease 
             rightKeyPress = false;
         }
-        if(evt.keyCode == UP_KEY){
+        if(evt.keyCode == UP_KEY){                                                       // Event for "W" which connects it to up key realease 
             upKeyPress = false;
         }
-        if(evt.keyCode == DOWN_KEY){
+        if(evt.keyCode == DOWN_KEY){                                                     // Event for "S" which connects it to down key realease 
             downKeyPress = false;                                                          
         }
         
-    }
+    } // end func
      
         
-    function makeCars(){
-        const CAR_WIDTH = 100;
+    function makeCars(){                                                                    // Specifying car dimensions
+        const CAR_WIDTH = 100;                                                               
         const CAR_HEIGHT = 50; 
         var carD = '';
+                                                                                            // Car Array Optimization  begins
         
-        
-        if(carCounter%2 == 0 && carCounter != 0){                                           // Initial Car array make
+        if(carCounter%2 == 0 && carCounter != 0){                                           // This part of coding helps in optimizing the accurate placement of the cars on the canvas 
             var carXpos = canvas.width;
-            var carYpos = CAR_HEIGHT * carCounter + CAR_HEIGHT * carCounter;
+            var carYpos = CAR_HEIGHT * carCounter + CAR_HEIGHT * carCounter;                // Places all the cars at fixed, but no accurate positions
             var carXspeed = -2;
             var carImg = new Image();
             carD = 'left';
@@ -151,15 +153,15 @@
         }
         if(carCounter == 0){
             var carXpos = canvas.width;
-            var carYpos = CAR_HEIGHT * carCounter + CAR_HEIGHT * 0.8;
+            var carYpos = CAR_HEIGHT * carCounter + CAR_HEIGHT * 0.8;                       // Places the first car from top on the first path, first lane
             var carXspeed = -2;
             var carImg = new Image();
             carD = 'left';
-            carImg.src = 'images/car.png';                                                   // Car Array Optimization begins
+            carImg.src = 'images/car.png';                                                     // No second from top car optimization as that is already in an accurate position
         }
         if(carCounter == 2){
             var carXpos = canvas.width;
-            var carYpos = CAR_HEIGHT * carCounter + CAR_HEIGHT * 2.5;
+            var carYpos = CAR_HEIGHT * carCounter + CAR_HEIGHT * 2.5;                      // Places the thrid car from top on the second path, first lane
             var carXspeed = -2;
             var carImg = new Image();
             carD = 'left';
@@ -167,15 +169,15 @@
         }
         if(carCounter == 3){
             var carXpos = -100;
-            var carYpos = CAR_HEIGHT * carCounter + CAR_HEIGHT * 3;
+            var carYpos = CAR_HEIGHT * carCounter + CAR_HEIGHT * 3;                         // Places the fourth car from top on the second path, second lane
             var carXspeed = 2;
             var carImg = new Image();
             carD = 'right';
-            carImg.src = 'images/carback.png';
+            carImg.src = 'images/carback.png';                                                  // No fifth from top car optimization as that is already in an accurate position
         }
         if(carCounter == 5){
             var carXpos = -100;
-            var carYpos = CAR_HEIGHT * carCounter + CAR_HEIGHT * 4.5;
+            var carYpos = CAR_HEIGHT * carCounter + CAR_HEIGHT * 4.5;                       // Places the sixth car from top on the third path, second lane
             var carXspeed = 2;
             var carImg = new Image();
             carD = 'right';
@@ -183,7 +185,7 @@
         }
         if(carCounter == 6){
             var carXpos = canvas.width;
-            var carYpos = CAR_HEIGHT * carCounter + CAR_HEIGHT * 5.5;
+            var carYpos = CAR_HEIGHT * carCounter + CAR_HEIGHT * 5.5;                        // Places the seventh car from top on the fourth path, first lane
             var carXspeed = -2;
             var carImg = new Image();
             carD = 'left';
@@ -191,7 +193,7 @@
         }
         if(carCounter == 7){
             var carXpos = -100;
-            var carYpos = CAR_HEIGHT * carCounter + CAR_HEIGHT * 6.25;
+            var carYpos = CAR_HEIGHT * carCounter + CAR_HEIGHT * 6.25;                       // Places the eigth car from top on the fourth path, second lane
             var carXspeed = 2;
             var carImg = new Image();
             carD = 'right';
@@ -200,37 +202,37 @@
             
         carCounter++;
         
-        var car = {
-            carXpos: carXpos,
-            carYpos: carYpos,
-            CAR_WIDTH: CAR_WIDTH,
+        var car = {                                                                          
+            carXpos: carXpos,                                                               // joining the variables and the constants 
+            carYpos: carYpos,                                                                 
+            CAR_WIDTH: CAR_WIDTH,                                                           
             CAR_HEIGHT: CAR_HEIGHT,
             carXspeed: carXspeed,
             carImg: carImg,
             carD: carD
         }
         cars.push(car);
-    }    
+    }   // end func 
         
     function drawCars(){
         cars.forEach(function(car,i,array){
-             drawImg(car.carImg,car.carXpos,car.carYpos,car.CAR_WIDTH,car.CAR_HEIGHT);
+             drawImg(car.carImg,car.carXpos,car.carYpos,car.CAR_WIDTH,car.CAR_HEIGHT);      // Function to show the car on the canvas
         });
-    }    
+    }    // end func
        
     function moveCars(){
-        cars.forEach(function(car,i,array){
+        cars.forEach(function(car,i,array){                                         // as the score incresaes, the speed of the car facing left also increases
            car.carXpos += car.carXspeed;
             if(car.carD == 'left'){
                 car.carXspeed = -2 - score / 4;
-            } else if(car.carD == 'right'){
+            } else if(car.carD == 'right'){                                         // as the score incresaes, the speed of the car facing right also increases
                 car.carXspeed = 2 + score / 4;
             }
             if(car.carXpos > canvas.width){
-            car.carXpos = -100 ;                                                    // Left car going right then coming back from left
+            car.carXpos = -100 ;                                                    // Right side facing car going right then coming back from left
             }
             if(car.carXpos < -100 ){
-            car.carXpos = canvas.width - car.CAR_WIDTH + 100;                       // Right car goind left then coming back from right
+            car.carXpos = canvas.width - car.CAR_WIDTH + 100;                       // Left side facing car going left then coming back from right side
             }  
             if(playerXpos + PLAYER_WIDTH > car.carXpos && playerXpos < car.carXpos + car.CAR_WIDTH && playerYpos + PLAYER_HEIGHT > car.carYpos && playerYpos < car.carYpos + car.CAR_HEIGHT && car.carD == 'right'){
             playerXpos = canvas.width / 2 - PLAYER_WIDTH / 2;
@@ -243,21 +245,21 @@
             gameRun = false;
             }
               
-        });
+        }); // end func
     }      
         
     function playerMove(){                                                         // Player movement and keybind connection starts
         if(leftKeyPress && playerXpos > 0){
-            playerXpos -= playerXspeed
+            playerXpos -= playerXspeed                                                    // a = move left
         }
         if(rightKeyPress && playerXpos < canvas.width - PLAYER_WIDTH){
-            playerXpos += playerXspeed
+            playerXpos += playerXspeed                                                    // d = move right 
         }
         if(upKeyPress && playerYpos > 0){
-            playerYpos -= playerYspeed
+            playerYpos -= playerYspeed                                                    // w = move up
         }
         if(downKeyPress && playerYpos <  canvas.height - PLAYER_HEIGHT){
-            playerYpos += playerYspeed
+            playerYpos += playerYspeed                                                    // s = move down
         }
         if (playerYpos < 5){
             score ++;
@@ -266,22 +268,22 @@
             playerXspeed += 0.1;
             playerYspeed += 0.1;
             }                                                                       // Player movement and keybind connection ends      
-    }
+    } // end func
     
-    function colorRect(x,y,w,h,c){
+    function colorRect(x,y,w,h,c){                                                  // Funtion to display anything related to flat colours
         canvasContext.fillStyle = c;
         canvasContext.fillRect (x,y,w,h,c);
-    }
+    } // end func
         
     function drawImg(src,x,y,w,h){
-        canvasContext.drawImage(src,x,y,w,h);                                      // Function to dispaly images on the screen     
-    }
+        canvasContext.drawImage(src,x,y,w,h);                                      // Function to dispaly anything related to images (jpg, png etc)  
+    } // end func
         
-    function drawText(f,msg,x,y,c){                                                // Function to display Text on the screen
+    function drawText(f,msg,x,y,c){                                                // Function to display anything related to text
         canvasContext.font = f;
         canvasContext.fillStyle = c;
         canvasContext.fillText(msg,x,y);
-    }
+    } // end func
     
 </script>
 </body> 
